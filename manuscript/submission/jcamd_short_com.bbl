@@ -1,4 +1,4 @@
-\begin{thebibliography}{30}
+\begin{thebibliography}{34}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -29,6 +29,33 @@ Grigore Pintilie, Kai Zhang, Zhaoming Su, Shiheng Li, Michael~F. Schmid, and
 \newblock Measurement of atom resolvability in cryo-em maps with q-scores.
 \newblock \emph{Nature Methods}, 17:\penalty0 328--334, 2020.
 \newblock \doi{10.1038/s41592-020-0731-1}.
+
+\bibitem[K{\"u}hlbrandt(2014)]{kuhlbrandt2014}
+Werner K{\"u}hlbrandt.
+\newblock The resolution revolution.
+\newblock \emph{Science}, 343\penalty0 (6178):\penalty0 1443--1444, 2014.
+\newblock \doi{10.1126/science.1251652}.
+
+\bibitem[Lee et~al.(2023)]{lee2023}
+Seho Lee et~al.
+\newblock Benchmarking applicability of medium-resolution cryo-{EM} protein
+  structures for structure-based drug design.
+\newblock \emph{Journal of Computational Chemistry}, 44\penalty0 (14):\penalty0
+  1360--1368, 2023.
+\newblock \doi{10.1002/jcc.27091}.
+
+\bibitem[Holcomb et~al.(2023)Holcomb, Chang, Goodsell, and Forli]{holcomb2023}
+Matthew Holcomb, Ya-Ting Chang, David~S. Goodsell, and Stefano Forli.
+\newblock Evaluation of {AlphaFold2} structures as docking targets.
+\newblock \emph{Protein Science}, 32\penalty0 (1):\penalty0 e4530, 2023.
+\newblock \doi{10.1002/pro.4530}.
+
+\bibitem[Scardino et~al.(2022)Scardino, Di~Filippo, and
+  Cavasotto]{scardino2022}
+Valeria Scardino, Juan~I. Di~Filippo, and Claudio~N. Cavasotto.
+\newblock How good are {AlphaFold} models for docking-based virtual screening?
+\newblock \emph{iScience}, 26\penalty0 (1):\penalty0 105920, 2022.
+\newblock \doi{10.1016/j.isci.2022.105920}.
 
 \bibitem[Kumagai et~al.(2006)Kumagai, Lee, Yoo, and Dunphy]{kumagai2006}
 Akiko Kumagai, Jean Lee, Hae~Yong Yoo, and William~G. Dunphy.
@@ -89,16 +116,6 @@ Noel~M. O'Boyle, Michael Banck, Craig~A. James, Chris Morley, Tim
   Vandermeersch, and Geoffrey~R. Hutchison.
 \newblock Open babel: An open chemical toolbox.
 \newblock \emph{Journal of Cheminformatics}, 2011.
-
-\bibitem[Olsson et~al.(2011)Olsson, S{\o}ndergaard, Rostkowski, and
-  Jensen]{olsson2011}
-Mats H.~M. Olsson, Chresten~R. S{\o}ndergaard, Michal Rostkowski, and Jan~H.
-  Jensen.
-\newblock {PROPKA3}: Consistent treatment of internal and surface residues in
-  empirical {pKa} predictions.
-\newblock \emph{Journal of Chemical Theory and Computation}, 7\penalty0
-  (2):\penalty0 525--537, 2011.
-\newblock \doi{10.1021/ct100578z}.
 
 \bibitem[Gasteiger and Marsili(1980)]{gas_marsili}
 Johann Gasteiger and Mario Marsili.
@@ -180,6 +197,13 @@ Victoria~I. Cushing, Ai~Fang Koh, Jing Feng, Kotryna Jurgaityte, Alexander
   structure-based drug design.
 \newblock \emph{Nature Communications}, 15:\penalty0 2265, 2024.
 \newblock \doi{10.1038/s41467-024-46375-9}.
+
+\bibitem[Su et~al.(2019)Su, Yang, Du, Feng, Liu, Li, and Wang]{su2019}
+Minyi Su, Qifan Yang, Yu~Du, Guoqin Feng, Zhihai Liu, Yan Li, and Renxiao Wang.
+\newblock Comparative assessment of scoring functions: The {CASF}-2016 update.
+\newblock \emph{Journal of Chemical Information and Modeling}, 59\penalty0
+  (2):\penalty0 895--913, 2019.
+\newblock \doi{10.1021/acs.jcim.8b00545}.
 
 \bibitem[R{\"o}hrig et~al.(2023)R{\"o}hrig, Goullieux, Bugnon, and
   Zoete]{zhang2023}
