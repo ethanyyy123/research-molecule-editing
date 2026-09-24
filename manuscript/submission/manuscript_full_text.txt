@@ -401,9 +401,6 @@ rules out the possibility that the docking box reached
 the allosteric site. Per the pre-specified rule, 9L40 was
 excluded from the candidate-scoring process. Figure 1
 shows the native and docked poses for both structures.
-3.2 Multi-structure survey
-Table 2 reports results for all 17 structures tested. Of
-these, 14 of 17 (82%) do not pass the 2.0 Å threshold;
 Cognate redocking for cryo-EM kinase structures 5
 Fig. 1: Native (grey) vs. redocked (colored) best pose.
 Left: 9L40/berzosertib (symmetry-corrected RMSD
@@ -420,6 +417,9 @@ Search reproducibility: mean pairwise RMSD between
 replicate best poses. b
 Non-cryo-EM (X-ray) reference
 structure.
+3.2 Multi-structure survey
+Table 2 reports results for all 17 structures tested. Of
+these, 14 of 17 (82%) do not pass the 2.0 Å threshold;
 only three pass it: 9L4B, 2YM8, and one CAK entry
 (8P75). There was no statistically significant monotonic
 association between reported resolution and redocking
@@ -448,9 +448,6 @@ The 14 CAK structures come from a single target sys-
 tem and research group; they are thus clustered obser-
 vations, not 14 independent targets. Within this single-
 target series, 13 of 14 structures failed the prespecified
-criterion. Because of this clustering, the 13/14 observa-
-tion should not be interpreted as an estimate of the un-
-derlying failure probability for kinase structures gener-
 Table 2: Multi-structure survey, all 17 structures tested,
 sorted by symmetry-corrected RMSD. n/a: Q-score not
 reported for this experimental method (X-ray) or ligand
@@ -473,6 +470,9 @@ Structure Res. (Å) RMSD (Å) Pass? Q-score Res. incl.
 8P74 (CAK) 2.20 6.67 No 0.628 0.793
 8P71 (CAK) 2.00 7.02 No 0.720 0.926
 8P6W (CAK) 1.90 7.33 No 0.762 0.929
+criterion. Because of this clustering, the 13/14 observa-
+tion should not be interpreted as an estimate of the un-
+derlying failure probability for kinase structures gener-
 ally, but rather as descriptive evidence of failure within
 this particular CAK series.
 3.3 Positive-control sanity check
@@ -501,14 +501,14 @@ report substantially higher top-pose success rates (Sup-
 plementary Section S1).
 The CAK series (1/14 passed, 7.1%; exact 95% CI
 0.2–33.9%) showed fewer successful redockings than the
-CASF sanity-check subset (8/20, 40%; Table 3). Fisher’s
-exact test gave p = 0.037 for the prespecified one-sided
 6 Ye et al.
 Table 3: Summary of redocking outcomes
 Set n Pass (rate) 95% CI
 CASF-2016 subset (pipeline sanity check) 20 8 (40%) 19.1–63.9%
 CAK series (single-target) 14 1 (7.1%) 0.2–33.9%
 ATR pair (9L40/9L4B) 2 1 (50%) 1.3–98.7%
+CASF sanity-check subset (8/20, 40%; Table 3). Fisher’s
+exact test gave p = 0.037 for the prespecified one-sided
 comparison (hypothesis: CAK would succeed less often
 than the CASF control) and p = 0.050 for the two-
 sided comparison. The CASF sanity check did not reveal
@@ -550,8 +550,6 @@ cussion).
 Docking the 40-compound pilot set against the excluded
 9L40 instead of validated 9L4B produced low rank con-
 cordance: Spearman ρ = 0.21 (bootstrap 95% CI −0.19
-to 0.52, crossing zero), Kendall τ = 0.09, mean absolute
-rank displacement 11.7 positions (max 29), and only 5
 Table 4: Largest rank shifts between 9L40 and 9L4B scor-
 ing
 Compound Rank (9L40) Rank (9L4B) Shift
@@ -559,6 +557,8 @@ deriv_017 5 34 29
 deriv_010 10 39 29
 deriv_022 32 7 25
 deriv_033 34 9 25
+to 0.52, crossing zero), Kendall τ = 0.09, mean absolute
+rank displacement 11.7 positions (max 29), and only 5
 of 10 compounds shared between the two top-10 lists
 (Table 4). The five shared top-10 compounds were: ca-
 monsertib, ceralasertib, deriv_002, deriv_003, and de-
@@ -601,9 +601,9 @@ Only two structures with available Q-score measurements
 passed, so the comparison of the Q-score group is descrip-
 tive rather than definitive and should not be generalized
 beyond this sample. The shortcut to skip the redocking-
+Cognate redocking for cryo-EM kinase structures 7
 validation step this paper argues against is not a neu-
 tral one either: the error-propagation comparison above
-Cognate redocking for cryo-EM kinase structures 7
 shows that scoring candidates against an unvalidated re-
 ceptor does reorder a screen’s mid-ranks even where it
 preserves its very top, so the real-world cost of skipping
