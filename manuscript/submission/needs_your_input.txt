@@ -6,13 +6,13 @@ Currently says: [Placeholder]
 Needs: funding sources, any people or resources you want to thank, or delete the section entirely if there's nothing to acknowledge.
 
 2. AUTHOR CONTRIBUTIONS (CRediT statement)
-Currently a fill-in-the-blank template:
-Conceptualization -- [initials]; Methodology -- [initials]; Software -- [initials]; Validation -- [initials]; Formal analysis -- [initials]; Investigation -- [initials]; Data curation -- [initials]; Writing - original draft -- [initials]; Writing - review & editing -- [initials].
-Needs: replace each [initials] with the initials of whichever author(s) did that role. Multiple authors can share a role (e.g. "Software -- EY, AP").
+Filled in with a draft assignment, NOT yet confirmed by the team:
+Conceptualization -- E.Y.; Methodology -- E.Y.; Software -- E.Y.; Validation -- all five authors; Formal analysis -- E.Y.; Investigation -- all five authors; Data curation -- E.Y.; Writing - original draft -- E.Y.; Writing - review & editing -- all five authors.
+Needs: this puts most roles on Ethan Ye by default since that's who actually drove the project in the repo history -- everyone else should look at this and correct it to reflect what they actually did (e.g. if Aryan, Sungju, Alexandre, or Eunho contributed to methodology, software, or analysis specifically, add their initials to those roles too).
 
 3. AUTHOR LIST AND AFFILIATION
-Currently: Ethan Ye, Aryan Padarthi, Sungju Kim, Alexandre Elie-Dit-Cosaque; Allen High School, Allen ISD, Allen, TX 75013, USA; corresponding email ethan.ye@student.allenisd.org
-Needs: confirm this is the final author order, affiliation wording, and that the corresponding-author email is the one you want printed (a school email may not stay reachable after graduation -- consider adding a personal email too).
+Currently: Ethan Ye, Aryan Padarthi, Sungju Kim, Alexandre Elie-Dit-Cosaque, Eunho Jo; Allen High School, Allen ISD, Allen, TX 75013, USA; corresponding email ethan.ye@student.allenisd.org
+Needs: confirm this is the final author order, affiliation wording, and that the corresponding-author email is the one you want printed (a school email may not stay reachable after graduation -- consider adding a personal email too). Eunho Jo's institute-block email (eunho.jo@student.allenisd.org) was not added since only one corresponding-author email is shown on the title page -- let me know if you want a second contact listed.
 
 4. CONFLICT OF INTEREST
 Currently says: The authors declare no competing interests.

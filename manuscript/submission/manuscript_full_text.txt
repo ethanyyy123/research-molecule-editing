@@ -2,7 +2,7 @@ Journal of Computer-Aided Molecular Design manuscript No.
 (will be inserted by the editor)
 Cognate redocking as a quality-control step for cryo-EM kinase
 receptor structures: a study of ATR/CHK1 and CDK-activating kinase
-Ethan Ye, Aryan Padarthi, Sungju Kim, Alexandre Elie-Dit-Cosaque
+Ethan Ye, Aryan Padarthi, Sungju Kim, Alexandre Elie-Dit-Cosaque, Eunho Jo
 Allen High School, Allen ISD, Allen, TX 75013, USA
 e-mail: ethan.ye@student.allenisd.org
 Received: / Accepted:
@@ -666,12 +666,15 @@ verification.
 Acknowledgements
 [Placeholder]
 Author contributions
-CRediT roles to be completed by the authors prior to
-submission: Conceptualization – [initials]; Methodology
-– [initials]; Software – [initials]; Validation – [initials]; For-
-mal analysis – [initials]; Investigation – [initials]; Data
-curation – [initials]; Writing – original draft – [initials];
-Writing – review & editing – [initials].
+CRediT roles (E.Y.: Ethan Ye; A.P.: Aryan Padarthi;
+S.K.: Sungju Kim; A.E.C.: Alexandre Elie-Dit-Cosaque;
+E.J.: Eunho Jo). Draft assignment, to be confirmed by all
+authors prior to submission: Conceptualization – E.Y.;
+Methodology – E.Y.; Software – E.Y.; Validation – E.Y.,
+A.P., S.K., A.E.C., E.J.; Formal analysis – E.Y.; Inves-
+tigation – E.Y., A.P., S.K., A.E.C., E.J.; Data curation
+– E.Y.; Writing – original draft – E.Y.; Writing – review
+& editing – E.Y., A.P., S.K., A.E.C., E.J.
 Data availability
 All code, seed and derivative compound tables, redock-
 ing validation results, individual replicate RMSDs, pre-
@@ -701,10 +704,10 @@ revise sections of this manuscript, and to perform iter-
 ative, automated critique of intermediate drafts against
 the underlying code and data – not a substitute for inde-
 pendent human peer review. That process itself caught
+8 Ye et al.
 errors, including numbers and described procedures in
 an earlier draft that were not actually supported by any
 script or data file in the repository above; those have
-8 Ye et al.
 been corrected or removed. All AI-assisted code, analy-
 ses, and text were reviewed by the authors, who take full
 responsibility for the content of the published article.
@@ -814,8 +817,8 @@ Agnes Krasowski, Ian H. Gilbert, Julie Frearson,
 and Paul G. Wyatt. Lessons learnt from assembling
 screening libraries for drug discovery for neglected
 diseases. ChemMedChem, 3(3):435–444, 2008. doi:
-10.1002/cmdc.200700139.
 Cognate redocking for cryo-EM kinase structures 9
+10.1002/cmdc.200700139.
 26. Arup K. Ghose, Vellarkad N. Viswanadhan, and
 John J. Wendoloski. A knowledge-based approach
 in designing combinatorial or medicinal chemistry li-
