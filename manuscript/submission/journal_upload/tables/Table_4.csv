@@ -1,8 +1,0 @@
-Table 4. Largest rank shifts between 9L40 and 9L4B scoring
-Compound,Rank (9L40),Rank (9L4B),Shift
-deriv_017,5,34,29
-deriv_010,10,39,29
-deriv_022,32,7,25
-deriv_033,34,9,25
-
-Notes: Matched three-seed design (seeds 2000, 2001, 2002) for both receptors. Out of the 40-compound pilot set (5 seeds + 35 developability-passed derivatives).
