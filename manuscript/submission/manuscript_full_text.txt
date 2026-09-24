@@ -4,7 +4,7 @@ Cognate redocking as a quality-control step for cryo-EM kinase
 receptor structures: a study of ATR/CHK1 and CDK-activating kinase
 Ethan Ye, Aryan Padarthi, Sungju Kim, Alexandre Elie-Dit-Cosaque, Eunho Jo
 Allen High School, Allen ISD, Allen, TX 75013, USA
-e-mail: ethan.ye@student.allenisd.org
+e-mail: aryan.padarthi@student.allenisd.org
 Received: / Accepted:
 Abstract Cognate redocking—reproducing a receptor’s
 own deposited experimental ligand model—is a standard
@@ -42,7 +42,7 @@ tematic, multi-target evaluation.
 Key words molecular docking redocking validation
 cryo-EM ATR kinase virtual screening AutoDock
 Vina BRICS CASF-2016
-Send offprint requests to: Ethan Ye
+Send offprint requests to: Aryan Padarthi
 1 Introduction
 Molecular docking remains one of the most widely used
 computational methods in structure-based drug discov-

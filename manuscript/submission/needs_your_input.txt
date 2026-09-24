@@ -11,8 +11,8 @@ Conceptualization -- E.Y.; Methodology -- E.Y.; Software -- E.Y.; Validation -- 
 Needs: this puts most roles on Ethan Ye by default since that's who actually drove the project in the repo history -- everyone else should look at this and correct it to reflect what they actually did (e.g. if Aryan, Sungju, Alexandre, or Eunho contributed to methodology, software, or analysis specifically, add their initials to those roles too).
 
 3. AUTHOR LIST AND AFFILIATION
-Currently: Ethan Ye, Aryan Padarthi, Sungju Kim, Alexandre Elie-Dit-Cosaque, Eunho Jo; Allen High School, Allen ISD, Allen, TX 75013, USA; corresponding email ethan.ye@student.allenisd.org
-Needs: confirm this is the final author order, affiliation wording, and that the corresponding-author email is the one you want printed (a school email may not stay reachable after graduation -- consider adding a personal email too). Eunho Jo's institute-block email (eunho.jo@student.allenisd.org) was not added since only one corresponding-author email is shown on the title page -- let me know if you want a second contact listed.
+Currently: Ethan Ye, Aryan Padarthi, Sungju Kim, Alexandre Elie-Dit-Cosaque, Eunho Jo; Allen High School, Allen ISD, Allen, TX 75013, USA; corresponding author is now Aryan Padarthi, email aryan.padarthi@student.allenisd.org
+Needs: confirm this is the final author order and affiliation wording, and that Aryan is comfortable being the corresponding author (that's the contact the journal and any future readers will reach out to). A school email may not stay reachable after graduation -- consider adding a personal email too. Eunho Jo's email (eunho.jo@student.allenisd.org) is not listed anywhere on the title page since only one corresponding-author email is shown -- let me know if you want a second contact listed.
 
 4. CONFLICT OF INTEREST
 Currently says: The authors declare no competing interests.
