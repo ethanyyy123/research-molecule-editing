@@ -1,0 +1,7 @@
+Table 3. Summary of redocking outcomes
+Set,n,Pass (rate),95% CI
+CASF-2016 subset (pipeline sanity check),20,8 (40%),19.1-63.9%
+CAK series (single-target),14,1 (7.1%),0.2-33.9%
+ATR pair (9L40/9L4B),2,1 (50%),1.3-98.7%
+
+Notes: Exact binomial 95% confidence intervals computed by the Clopper-Pearson method. CASF-2016 subset selected by an objective, non-random rule (first 20 PDB IDs, in file order, of a redistributed CASF-2016 core-set listing; see Methods).
