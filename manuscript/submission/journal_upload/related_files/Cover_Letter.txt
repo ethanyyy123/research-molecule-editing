@@ -1,0 +1,90 @@
+Cover Letter for JCAMD Submission
+
+Journal: Journal of Computer-Aided Molecular Design (JCAMD)
+Article Type: Short Communication
+Title: Cognate redocking as a quality-control step for cryo-EM kinase
+receptor structures: a study of ATR/CHK1 and CDK-activating kinase
+
+---
+
+To:
+Editor-in-Chief
+Journal of Computer-Aided Molecular Design
+
+Dear Editor-in-Chief,
+
+We are pleased to submit our manuscript titled "Cognate redocking as a
+quality-control step for cryo-EM kinase receptor structures: a study of
+ATR/CHK1 and CDK-activating kinase" for consideration as a Short
+Communication in the Journal of Computer-Aided Molecular Design.
+
+Scientific context and key findings
+
+Structure-based virtual screening campaigns increasingly adopt newly
+deposited cryo-EM structures as docking receptors, often on the
+assumption that high nominal resolution and deposition recency are
+sufficient guarantees of structural reliability. This manuscript tests
+that assumption directly, using cognate redocking (reproducing a
+receptor's own deposited ligand pose) as the diagnostic.
+
+1. Two 2025 cryo-EM structures of ATR solved in the same study diverged
+   sharply on this test: the lower-resolution structure (PDB 9L4B,
+   3.20 A) passed a pre-specified 2.0 A symmetry-corrected RMSD
+   threshold, while the higher-resolution structure (PDB 9L40, 2.87 A)
+   failed -- an inversion not explained by proximity to a nearby
+   allosteric site.
+2. Extending the identical protocol to 14 additional cryo-EM structures
+   of the CDK7/cyclin H/MAT1 CAK complex found 13 of 14 failing the same
+   criterion.
+3. Because this failure rate is well below AutoDock Vina's documented
+   self-docking success rate on curated benchmarks, we ran the
+   identical, unmodified pipeline on 20 objectively selected CASF-2016
+   complexes as a pipeline sanity check (not a comprehensive benchmark):
+   8/20 passed (40%), statistically indistinguishable from the
+   literature baseline and arguing against a badly broken pipeline,
+   while the CAK failure rate remained a significant outlier against
+   this pipeline's own measured baseline (Fisher's exact p = 0.037
+   one-sided).
+4. Neither nominal resolution nor wwPDB map-model metrics (Q-score,
+   residue inclusion) predicted redocking outcome in this sample.
+5. A matched flexible-sidechain control showed that allowing five
+   active-site residues to move genuinely improved the failing pose
+   (4.50 to 3.00 A) without rescuing it -- a corrected, more careful
+   finding than an earlier, confounded version of this comparison.
+6. Scoring a 40-compound pilot library against the excluded structure
+   instead of the validated one left the top five ranked compounds
+   unchanged but materially reordered the mid-ranks of the screen
+   (Spearman rho = 0.21), demonstrating a concrete consequence of
+   skipping this validation step.
+
+Journal scope and format alignment
+
+This manuscript is submitted as a Short Communication: a focused,
+methodologically disciplined test of a single validation practice,
+directly relevant to the computational chemistry and molecular modeling
+community, rather than a comprehensive virtual screening campaign.
+
+- Open science and reproducibility: all code, seed and derivative
+  compound tables, redocking validation results, individual replicate
+  RMSDs, and prepared PDBQT files are available in public GitHub
+  repositories (see Data availability in the manuscript).
+- Exclusivity: this manuscript is original, has not been published
+  previously, and is not currently under consideration elsewhere.
+- AI assistance in preparation: as disclosed in the manuscript's
+  Declarations section, the authors used an AI assistant (Claude,
+  Anthropic) to help develop and debug the computational pipeline's
+  code and to draft and revise sections of this manuscript. All
+  AI-assisted content was reviewed and verified by the authors against
+  the underlying code and data, and the authors take full
+  responsibility for the content of the published article.
+
+Thank you for your consideration of our work.
+
+Sincerely,
+
+Ethan Ye, Aryan Padarthi, Sungju Kim, Alexandre Elie-Dit-Cosaque,
+Eunho Jo
+Allen High School, Allen ISD, Allen, TX 75013, USA
+
+Corresponding author: Aryan Padarthi
+Email: aryan.padarthi@student.allenisd.org

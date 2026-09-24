@@ -1,0 +1,37 @@
+ITEMS YOU STILL NEED TO FILL IN OR DECIDE BEFORE SUBMITTING
+(from manuscript/submission/jcamd_short_com.tex)
+
+1. ACKNOWLEDGEMENTS
+Currently says: [Placeholder]
+Needs: funding sources, any people or resources you want to thank, or delete the section entirely if there's nothing to acknowledge.
+
+2. AUTHOR CONTRIBUTIONS (CRediT statement)
+Filled in with a draft assignment, NOT yet confirmed by the team:
+Conceptualization -- E.Y.; Methodology -- E.Y.; Software -- E.Y.; Validation -- all five authors; Formal analysis -- E.Y.; Investigation -- all five authors; Data curation -- E.Y.; Writing - original draft -- E.Y.; Writing - review & editing -- all five authors.
+Needs: this puts most roles on Ethan Ye by default since that's who actually drove the project in the repo history -- everyone else should look at this and correct it to reflect what they actually did (e.g. if Aryan, Sungju, Alexandre, or Eunho contributed to methodology, software, or analysis specifically, add their initials to those roles too).
+
+3. AUTHOR LIST AND AFFILIATION
+Currently: Ethan Ye, Aryan Padarthi, Sungju Kim, Alexandre Elie-Dit-Cosaque, Eunho Jo; Allen High School, Allen ISD, Allen, TX 75013, USA; corresponding author is now Aryan Padarthi, email aryan.padarthi@student.allenisd.org
+Needs: confirm this is the final author order and affiliation wording, and that Aryan is comfortable being the corresponding author (that's the contact the journal and any future readers will reach out to). A school email may not stay reachable after graduation -- consider adding a personal email too. Eunho Jo's email (eunho.jo@student.allenisd.org) is not listed anywhere on the title page since only one corresponding-author email is shown -- let me know if you want a second contact listed.
+
+4. CONFLICT OF INTEREST
+Currently says: The authors declare no competing interests.
+Needs: confirm this is actually true for all authors before submitting.
+
+5. DATA AVAILABILITY -- REPO LINKS
+Currently points to:
+https://github.com/ethanyyy123/research-molecule-editing
+https://github.com/The-MathKing/CogRed
+Needs: make sure both repos are public (or will be made public) at submission time, and that CogRed is the name/URL you actually want cited in a published paper -- consider whether a permanent archive (e.g. a Zenodo DOI) would be better than a live GitHub link, since GitHub repos can be renamed, moved, or deleted.
+
+6. TITLE PAGE DATE
+Currently says: Received: / Accepted:
+Needs: nothing from you -- this is filled in by the journal during production. Leave as is.
+
+7. ABSTRACT / KEYWORDS -- FINAL READ
+Not a placeholder, but worth a human proofread: the abstract was trimmed hard to fit under 250 words, and several sections were rewritten to correct fabricated data caught during review. Read it once yourself to make sure it still sounds like your voice and that nothing reads as awkward from the editing.
+
+STILL OPEN (flagged in the last review round, not yet done):
+- No rotation-angle analysis was added to distinguish the two candidate explanations for the CAK docking failures (hinge-binding reorientation vs. rigid-receptor limitation).
+- The Meeko-vs-Open-Babel receptor-preparation check was only ever run for 9L40/9L4B, not the CAK series -- if you want that confirmed for CAK too, it would need to actually be run (no such data exists yet).
+- 2YM8 is still the only non-cryo-EM (X-ray) comparator structure in the study (n=1) -- a real limitation, not something to fix by rewriting.

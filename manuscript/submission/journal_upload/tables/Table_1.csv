@@ -1,0 +1,7 @@
+Table 1. Redocking validation (three seeded Vina replicates, exhaustiveness 32)
+Structure,Resolution (A),Symmetry-corrected RMSD (A),Pass?,Search reproducibility (A)
+9L40 (ATR),2.87,2.53 +/- 0.01,No,0.56
+9L4B (ATR),3.20,0.61 +/- 0.02,Yes,0.045
+2YM8 (CHK1),2.07,0.76 +/- 0.01,Yes,0.078
+
+Notes: Search reproducibility = mean pairwise RMSD between replicate best poses. 2YM8 is the non-cryo-EM (X-ray) reference structure. Resolution taken from each structure's mmCIF record (_em_3d_reconstruction.resolution for cryo-EM entries, _reflns.d_resolution_high for the X-ray entry).

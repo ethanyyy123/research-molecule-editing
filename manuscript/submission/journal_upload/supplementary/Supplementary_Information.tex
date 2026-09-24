@@ -1,0 +1,99 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+
+\title{Supplementary Information\\
+\large Cognate redocking as a quality-control step for cryo-EM kinase
+receptor structures: a study of ATR/CHK1 and CDK-activating kinase}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Supplementary Section S1: Other CASF-2016 evaluations report
+higher top-pose success rates under a different protocol}
+
+The 58\% figure cited in the main text (Methods, Results \S3.3) is
+AutoDock Vina's \emph{self-docking} (redocking) success rate on the
+285-complex PDBbind Core Set, as reported by R\"ohrig et
+al.~\cite{zhang2023}: the ligand is removed from its own co-crystallized
+receptor and re-docked from scratch, then scored against a $\le$2.0~\AA{}
+RMSD threshold to the native pose -- the same protocol used throughout
+this study. This is a different, and considerably harder, test than
+CASF-2016's own \emph{docking power} metric, which asks whether the
+correct (near-native) pose is ranked at or near the top of a
+pre-generated, decoy-enriched pose ensemble rather than found by a full
+conformational search. Under that docking-power protocol, Su et
+al.~\cite{su2019} report that AutoDock Vina achieves a top-1 pose success
+rate of 90.2\% (257 of 285 complexes) on CASF-2016. The two figures (58\%
+self-docking vs.\ 90.2\% docking power) are not directly comparable --
+they test different things -- but the gap illustrates why the 58\%
+self-docking baseline, not the 90.2\% docking-power figure, is the
+appropriate comparator for this study's redocking protocol, and why the
+58\% value should not be read as a general ``Vina success rate.''
+
+\section*{Supplementary Table S2: Residue-deletion list (flexible-sidechain
+receptor preparation)}
+
+Methods \S2.1 and \S2.8 report that Meeko's receptor-preparation step
+automatically deleted approximately 400 residues from the 9L40 receptor
+whose side-chain density could not be matched against a template at the
+structure's resolution, and that all deleted residues were $>$10~\AA{}
+from the docking box. \textbf{This enumerated per-residue list is not
+currently available as a standalone data file in the project
+repository}: the deletions are performed programmatically by Meeko at
+receptor-preparation time and were not captured to a separate log or
+table when the pipeline was originally run. Reproducing this list exactly
+would require re-running \texttt{mk\_prepare\_receptor.py} on the 9L40
+structure and diffing its output against the input receptor -- the
+authors have not done this and are flagging the gap here rather than
+presenting a reconstructed or estimated list as original data. The
+prepared receptor and ligand PDBQT files used for the flexible-docking
+runs (from which this list could be regenerated) are available in the
+pipeline repository (Data availability, main text).
+
+\section*{Supplementary Table S4: Complete developability-passed
+derivative ranking}
+
+\input{table_s4_note}
+
+\section*{Supplementary Table S5: Flexible-sidechain redocking, individual
+replicate values}
+
+Individual-seed naive and symmetry-corrected RMSDs and Vina scores for
+the flexible-sidechain redocking run (five residues, 30~\AA{} box, Meeko
+preparation; Methods \S2.8, Results \S3.4). The matched rigid control
+(same 30~\AA{} box and Meeko-prepared receptor/ligand, no residues
+declared flexible) is reported in the main text and pipeline repository
+as a mean $\pm$ SD (4.50 $\pm$ 0.05~\AA{}); its individual per-seed values
+were not retained as a separate structured output and are not
+reproduced here for the same reason given for Table S2.
+
+\begin{center}
+\input{table_s5}
+\end{center}
+
+\section*{Supplementary Table S6: Individual replicate RMSDs underlying
+Tables 1--3}
+
+Symmetry-corrected RMSD for every seeded replicate (three seeds per
+structure) behind the summary values reported in Tables 1--3 of the main
+text: the three primary ATR/CHK1 structures (exhaustiveness 32), the 14
+additional CAK survey structures, and the 20 CASF-2016 sanity-check
+complexes (all at exhaustiveness 16, per Methods).
+
+{\footnotesize
+\input{table_s6}
+}
+
+\bibliographystyle{unsrtnat}
+\bibliography{refs}
+
+\end{document}

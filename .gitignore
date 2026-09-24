@@ -14,3 +14,7 @@ data/docking/
 *.smi
 
 !data/README.md
+
+# Scratch clone of the upstream pipeline repo (The-MathKing/CogRed), pulled
+# locally for reference while updating the manuscript -- not part of this repo
+CogRed_updates/

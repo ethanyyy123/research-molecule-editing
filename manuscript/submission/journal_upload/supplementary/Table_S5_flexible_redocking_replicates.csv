@@ -1,0 +1,5 @@
+condition,seed,naive_rmsd_A,symm_rmsd_A,vina_score_kcal_mol
+"flexible (5 residues, 30A box, Meeko prep)",1000,4.5427,4.2882,-9.795
+"flexible (5 residues, 30A box, Meeko prep)",1001,2.7159,2.2256,-9.547
+"flexible (5 residues, 30A box, Meeko prep)",1002,2.774,2.4945,-9.233
+"flexible (5 residues, 30A box, Meeko prep)",mean+/-SD,,3.0028 +/- 0.9155,

@@ -1,0 +1,112 @@
+table,structure,seed,symmetry_corrected_rmsd_A
+"Table 1 (primary, exhaustiveness 32)",9L40,1000,2.5334
+"Table 1 (primary, exhaustiveness 32)",9L40,1001,2.5183
+"Table 1 (primary, exhaustiveness 32)",9L40,1002,2.541
+"Table 1 (primary, exhaustiveness 32)",9L4B,1000,0.586
+"Table 1 (primary, exhaustiveness 32)",9L4B,1001,0.6217
+"Table 1 (primary, exhaustiveness 32)",9L4B,1002,0.6242
+"Table 1 (primary, exhaustiveness 32)",2YM8,1000,0.7503
+"Table 1 (primary, exhaustiveness 32)",2YM8,1001,0.7596
+"Table 1 (primary, exhaustiveness 32)",2YM8,1002,0.7737
+Table 2 (17-structure survey),8P6V,1000,6.1362
+Table 2 (17-structure survey),8P6V,1001,6.1415
+Table 2 (17-structure survey),8P6V,1002,6.1382
+Table 2 (17-structure survey),8P6W,1000,7.3217
+Table 2 (17-structure survey),8P6W,1001,7.3382
+Table 2 (17-structure survey),8P6W,1002,7.3151
+Table 2 (17-structure survey),8P6X,1000,6.5755
+Table 2 (17-structure survey),8P6X,1001,6.6673
+Table 2 (17-structure survey),8P6X,1002,6.5535
+Table 2 (17-structure survey),8P6Z,1000,2.1761
+Table 2 (17-structure survey),8P6Z,1001,6.1707
+Table 2 (17-structure survey),8P6Z,1002,6.1794
+Table 2 (17-structure survey),8P70,1000,6.2449
+Table 2 (17-structure survey),8P70,1001,6.2502
+Table 2 (17-structure survey),8P70,1002,6.2477
+Table 2 (17-structure survey),8P71,1000,7.0164
+Table 2 (17-structure survey),8P71,1001,7.0119
+Table 2 (17-structure survey),8P71,1002,7.0354
+Table 2 (17-structure survey),8P72,1000,2.6997
+Table 2 (17-structure survey),8P72,1001,2.6968
+Table 2 (17-structure survey),8P72,1002,2.7035
+Table 2 (17-structure survey),8P73,1000,5.8317
+Table 2 (17-structure survey),8P73,1001,5.842
+Table 2 (17-structure survey),8P73,1002,5.8357
+Table 2 (17-structure survey),8P74,1000,6.6669
+Table 2 (17-structure survey),8P74,1001,6.675
+Table 2 (17-structure survey),8P74,1002,6.6784
+Table 2 (17-structure survey),8P75,1000,1.0119
+Table 2 (17-structure survey),8P75,1001,1.0533
+Table 2 (17-structure survey),8P75,1002,1.0206
+Table 2 (17-structure survey),8P76,1000,6.6039
+Table 2 (17-structure survey),8P76,1001,6.5926
+Table 2 (17-structure survey),8P76,1002,6.5984
+Table 2 (17-structure survey),8P77,1000,3.0258
+Table 2 (17-structure survey),8P77,1001,6.0337
+Table 2 (17-structure survey),8P77,1002,6.0076
+Table 2 (17-structure survey),8P78,1000,2.9874
+Table 2 (17-structure survey),8P78,1001,2.9735
+Table 2 (17-structure survey),8P78,1002,2.9702
+Table 2 (17-structure survey),8P7L,1000,6.1469
+Table 2 (17-structure survey),8P7L,1001,6.1418
+Table 2 (17-structure survey),8P7L,1002,6.199
+Table 3 (CASF-2016 sanity check),1O3F,1000,1.4579
+Table 3 (CASF-2016 sanity check),1O3F,1001,1.4884
+Table 3 (CASF-2016 sanity check),1O3F,1002,1.4151
+Table 3 (CASF-2016 sanity check),1SYI,1000,11.8023
+Table 3 (CASF-2016 sanity check),1SYI,1001,11.8423
+Table 3 (CASF-2016 sanity check),1SYI,1002,11.8268
+Table 3 (CASF-2016 sanity check),2CET,1000,7.7526
+Table 3 (CASF-2016 sanity check),2CET,1001,7.7367
+Table 3 (CASF-2016 sanity check),2CET,1002,7.742
+Table 3 (CASF-2016 sanity check),2J7H,1000,9.3411
+Table 3 (CASF-2016 sanity check),2J7H,1001,9.3751
+Table 3 (CASF-2016 sanity check),2J7H,1002,9.3633
+Table 3 (CASF-2016 sanity check),2P4Y,1000,0.5712
+Table 3 (CASF-2016 sanity check),2P4Y,1001,0.4968
+Table 3 (CASF-2016 sanity check),2P4Y,1002,0.4805
+Table 3 (CASF-2016 sanity check),2W4X,1000,1.6605
+Table 3 (CASF-2016 sanity check),2W4X,1001,1.6689
+Table 3 (CASF-2016 sanity check),2W4X,1002,1.6799
+Table 3 (CASF-2016 sanity check),2XBV,1000,1.0321
+Table 3 (CASF-2016 sanity check),2XBV,1001,1.0494
+Table 3 (CASF-2016 sanity check),2XBV,1002,1.0399
+Table 3 (CASF-2016 sanity check),3ARQ,1000,3.1997
+Table 3 (CASF-2016 sanity check),3ARQ,1001,3.2081
+Table 3 (CASF-2016 sanity check),3ARQ,1002,3.1914
+Table 3 (CASF-2016 sanity check),3B65,1000,0.486
+Table 3 (CASF-2016 sanity check),3B65,1001,0.4871
+Table 3 (CASF-2016 sanity check),3B65,1002,0.4886
+Table 3 (CASF-2016 sanity check),3D6Q,1000,6.1551
+Table 3 (CASF-2016 sanity check),3D6Q,1001,6.1653
+Table 3 (CASF-2016 sanity check),3D6Q,1002,6.1546
+Table 3 (CASF-2016 sanity check),3DX1,1000,3.3101
+Table 3 (CASF-2016 sanity check),3DX1,1001,3.2738
+Table 3 (CASF-2016 sanity check),3DX1,1002,3.294
+Table 3 (CASF-2016 sanity check),3KWA,1000,3.3611
+Table 3 (CASF-2016 sanity check),3KWA,1001,3.3752
+Table 3 (CASF-2016 sanity check),3KWA,1002,3.5037
+Table 3 (CASF-2016 sanity check),3NQ9,1000,5.6598
+Table 3 (CASF-2016 sanity check),3NQ9,1001,9.8728
+Table 3 (CASF-2016 sanity check),3NQ9,1002,6.0619
+Table 3 (CASF-2016 sanity check),3PWW,1000,1.6869
+Table 3 (CASF-2016 sanity check),3PWW,1001,1.7456
+Table 3 (CASF-2016 sanity check),3PWW,1002,1.7894
+Table 3 (CASF-2016 sanity check),3WTJ,1000,6.3503
+Table 3 (CASF-2016 sanity check),3WTJ,1001,6.3478
+Table 3 (CASF-2016 sanity check),3WTJ,1002,6.3491
+Table 3 (CASF-2016 sanity check),4IH7,1000,4.5736
+Table 3 (CASF-2016 sanity check),4IH7,1001,4.572
+Table 3 (CASF-2016 sanity check),4IH7,1002,4.5719
+Table 3 (CASF-2016 sanity check),4K18,1000,4.5222
+Table 3 (CASF-2016 sanity check),4K18,1001,4.4707
+Table 3 (CASF-2016 sanity check),4K18,1002,4.5145
+Table 3 (CASF-2016 sanity check),4QAC,1000,0.5252
+Table 3 (CASF-2016 sanity check),4QAC,1001,0.5617
+Table 3 (CASF-2016 sanity check),4QAC,1002,0.5207
+Table 3 (CASF-2016 sanity check),4W9C,1000,9.5718
+Table 3 (CASF-2016 sanity check),4W9C,1001,9.6125
+Table 3 (CASF-2016 sanity check),4W9C,1002,9.5754
+Table 3 (CASF-2016 sanity check),4W9I,1000,1.2615
+Table 3 (CASF-2016 sanity check),4W9I,1001,1.4075
+Table 3 (CASF-2016 sanity check),4W9I,1002,1.4124
