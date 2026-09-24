@@ -37,32 +37,31 @@
 
 % ======================================================================
 \begin{abstract}
-Cognate redocking---reproducing a receptor's own deposited experimental
-ligand model---is a standard quality-control step in structure-based virtual
-screening. Two recent cryo-EM ATR structures (PDB~9L40, 2.87~\AA{},
-berzosertib-bound; PDB~9L4B, 3.20~\AA{}, camonsertib-bound) were redocked
-with AutoDock Vina (2.0~\AA{} symmetry-corrected RMSD pass threshold). 9L4B
-passed (0.61$\pm$0.02~\AA{}) whereas the higher-resolution 9L40 failed
+Reproducing a receptor's own deposited experimental ligand model (cognate
+redocking) is a quality check commonly applied in structure-based virtual
+screening. The cryo-EM ATR structures bound to berzosertib (PDB~9L40,
+2.87~\AA{}) and camonsertib (PDB~9L4B, 3.20~\AA{}) were redocked with
+AutoDock Vina (2.0~\AA{} symmetry-corrected RMSD pass threshold): 9L4B
+passed (0.61$\pm$0.02~\AA{}) while the higher-resolution 9L40 failed
 (2.53$\pm$0.01~\AA{}), not explained by the nearby allosteric pocket
-(60.65~\AA{} away). The same protocol, extended to 14 cryo-EM structures of
-the CDK7/cyclin~H/MAT1 CAK complex (a single-target series), found 13/14
-failing. As a pipeline sanity check rather than a comprehensive benchmark,
-the same pipeline was run on 20 objectively selected CASF-2016 complexes
-(8/20 passing, 40\%; exact 95\%~CI~19--64\%), ruling out a broken pipeline.
-Neither
-nominal resolution nor wwPDB map/model metrics (Q-score, residue inclusion)
-predicted redocking outcome; with only two Q-scored passing structures, this
-is a descriptive finding, not a definitive statistical correlation. Against
-a matched rigid control (4.50$\pm$0.05~\AA{}), allowing five active-site
-residues within 4.5~\AA{} of native berzosertib to move improved the 9L40
-pose (3.00$\pm$0.92~\AA{}) without reaching threshold. Docking a
-40-compound pilot library against excluded 9L40 instead of validated 9L4B
-left the top five ranked compounds unchanged but produced low overall rank
-concordance (Spearman $\rho=0.21$) and only 5/10 shared top-10 compounds:
-receptor choice materially reorders a screen's mid-ranks while preserving
-its very top. These results support cognate redocking as a structure-specific
-quality-control test whose necessity and sufficiency for prospective
-enrichment require systematic, multi-target evaluation.
+(60.65~\AA{} away). The procedure was repeated on 14 cryo-EM structures of
+the CDK7/cyclin~H/MAT1 CAK complex (a single-target series): again, 13/14
+structures did not pass. This is not a comprehensive benchmark, but it does
+serve as a pipeline sanity check: the same pipeline was applied to 20
+objectively chosen CASF-2016 complexes (8/20 passing, 40\%; exact 95\%~CI
+19--64\%), arguing against a badly broken pipeline. Neither nominal
+resolution nor the wwPDB map/model metrics (Q-score, residue inclusion)
+correlated with redocking performance; given only two Q-scored passing
+structures, this is a descriptive finding, not a conclusive statistical
+correlation. Against a matched rigid control (4.50$\pm$0.05~\AA{}),
+allowing five active-site residues within 4.5~\AA{} of native berzosertib
+to move improved the pose of 9L40 (3.00$\pm$0.92~\AA{}) but did not let it
+pass. Docking a 40-compound pilot library against excluded 9L40 instead of
+validated 9L4B left the top five compounds unchanged but reshuffled the
+screen's mid-ranks (Spearman $\rho=0.21$; only 5/10 shared top-10
+compounds). Cognate redocking is a structure-specific quality-control step
+whose necessity and sufficiency for prospective enrichment require
+systematic, multi-target validation.
 \end{abstract}
 
 \keywords{molecular docking \hspace{0.2em} redocking validation \hspace{0.2em} cryo-EM \hspace{0.2em} ATR kinase \hspace{0.2em} virtual screening \hspace{0.2em} AutoDock Vina \hspace{0.2em} BRICS \hspace{0.2em} CASF-2016}
@@ -70,56 +69,55 @@ enrichment require systematic, multi-target evaluation.
 % ======================================================================
 \section{Introduction}
 
-Molecular docking remains one of the most widely used computational methods
-in structure-based drug discovery, owing to its favorable balance of
-computational speed and predictive utility~\cite{trott2010,hartshorn2007}.
-The reliability of docking results depends on a chain of interdependent
-choices: receptor structure, ligand preparation, scoring function, search
-algorithm, and validation protocol. Among these, the quality and
-conformational state of the receptor structure is arguably the most
-consequential single factor, since errors introduced at this stage
-propagate through every downstream analysis -- a claim this study tests
-directly rather than merely asserts.
+Molecular docking is one of the most commonly employed computational tools
+in structure-based drug discovery because it provides a good compromise
+between speed and accuracy~\cite{trott2010,hartshorn2007}. Several factors
+are crucial for the reliability of the results obtained: receptor
+structure, ligand preparation, scoring function, search algorithm, and
+validation protocol. One of the most critical among these is the quality
+and conformation of the receptor structure, since all downstream analyses
+will inherit any errors introduced at this stage. This article aims to
+test that claim directly.
 
-Cryo-EM has emerged as a powerful technique for determining macromolecular
-structures at resolutions that are increasingly competitive with X-ray
-crystallography~\cite{pintilie2020,kuhlbrandt2014}. However, the
-relationship between nominal resolution and the suitability of a deposited
-structure for computational docking is not straightforward: even
+Cryo-EM has become an effective method for determining macromolecular
+structures, competing in many cases with X-ray crystallography at
+increasingly high resolution~\cite{pintilie2020,kuhlbrandt2014}. Although
+resolution and a deposited structure's suitability for computational
+docking might be expected to track together, recent work indicates that
 medium-resolution cryo-EM structures, cross-docked under a standard
-protocol, have been reported to succeed at roughly half the rate of
-high-resolution crystal structures~\cite{lee2023}. Several recent studies
-have likewise highlighted the importance of per-structure validation in the
-context of AlphaFold2-predicted models~\cite{holcomb2023,scardino2022},
-suggesting that structure-specific empirical tests may be necessary
-regardless of the perceived quality or provenance of the input model.
+protocol, succeed at only about half the rate of high-resolution crystal
+structures~\cite{lee2023}. Several recent studies have also emphasized the
+importance of per-structure validation using AlphaFold2-predicted
+models~\cite{holcomb2023,scardino2022}: structure-specific empirical
+testing may be required regardless of how high-quality the input model
+appears, or its source.
 
-ATR and CHK1 are established ATP-competitive kinase targets with multiple
-chemical inhibitors reported for structure-based
+ATR and CHK1 are ATP-competitive kinases with several chemical inhibitors
+reported for structure-based
 design~\cite{kumagai2006,bass2016,saldivar2017,casper2002,debatisse2012,fokas2012}.
-Recent cryo-EM structures of the ATR kinase domain---PDB~9L40 (bound to
-berzosertib, 2.87~\AA{}) and PDB~9L4B (bound to camonsertib,
-3.20~\AA{})~\cite{wang2025}---provide substantially improved structural
-templates for docking compared with the original 4.7~\AA{} ATR--ATRIP complex
-(PDB~5YZ0). A companion study revealed that berzosertib additionally engages
-a dimer-interface allosteric site~\cite{wang2025}, further underscoring the
-structural complexity of this target system. The practical, protocol-level
-question this raises is narrower than target biology: a rigid-receptor
-docking run treats a deposited cryo-EM coordinate set as ground truth, so if
-that single static model does not itself reproduce the experimental ligand
-pose it was built from, no amount of downstream scoring sophistication can
-recover a physically meaningful result. We therefore asked whether nominal
-resolution and standard cryo-EM map-model quality metrics are sufficient to
-identify structures that can reproduce their deposited experimental ligand
-poses under a fixed docking protocol.
+Recently published cryo-EM structures of the ATR kinase domain (PDB~9L40,
+bound to berzosertib, 2.87~\AA{}; PDB~9L4B, bound to camonsertib,
+3.20~\AA{})~\cite{wang2025} provide better starting points for docking than
+the original 4.7~\AA{} ATR--ATRIP complex (PDB~5YZ0). In a companion study,
+berzosertib was shown to engage an additional dimer-interface allosteric
+site~\cite{wang2025}, further highlighting the intrinsic complexity of this
+system. The challenge posed by these data is practical, at the level of
+experimental protocol, rather than target biology: docking to a deposited
+cryo-EM coordinate set treats those coordinates as the truth, but if that
+single snapshot model does not reproduce the ligand pose on which it was
+based, no amount of scoring innovation can restore a meaningful answer. We
+therefore asked whether nominal resolution and standard cryo-EM map-model
+quality metrics are sufficient to determine whether these deposited
+structures can reproduce their own experimental ligand poses under a fixed
+docking protocol.
 
-We note that cognate redocking---reproducing a receptor's own bound ligand
-pose---is a necessary sanity check for any docking protocol, but is not
-itself sufficient to establish prospective screening
-performance~\cite{jain2008}. The present study should
-be read as a methodological investigation of this validation step rather than
-as a comprehensive virtual screening campaign. Docking estimates predicted
-binding and cannot establish functional modulation~\cite{kumagai2006,bass2016}.
+Reproducing a receptor's own bound ligand pose (cognate redocking) is an
+important sanity check for any docking methodology, but it does not
+necessarily indicate predictive capability for prospective
+screening~\cite{jain2008}. Our work should be read as a methodological
+investigation into this process, not a broad virtual screening exercise. We
+also remind the reader that predicted binding, while useful, cannot provide
+evidence of functional modulation~\cite{kumagai2006,bass2016}.
 
 % ======================================================================
 \section{Materials and methods}
@@ -127,140 +125,145 @@ binding and cannot establish functional modulation~\cite{kumagai2006,bass2016}.
 
 \subsection{Receptor structures and preparation}
 
-Three receptor structures were obtained in mmCIF format from the RCSB PDB AWS
-Open Data mirror (snapshot~2026-01-01): PDB~9L40 (ATR, bound to berzosertib,
-2.87~\AA{}), PDB~9L4B (ATR, bound to camonsertib, 3.20~\AA{}), and PDB~2YM8
-(human CHK1, 2.07~\AA{})~\cite{wang2025}. 2YM8 is included as a non-cryo-EM
-(X-ray crystallographic) kinase reference structure to test whether the
-observed behavior is specific to cryo-EM-derived receptors; with only one
-such comparator, this test is necessarily limited to $n=1$ and is reported
-as such (Limitations). PDB~5YZ0 (4.7~\AA{}) was excluded as
-its resolution is insufficient to resolve ATP-pocket side-chain positions
-reliably~\cite{wang2025}. Both protein chains (full homodimer) were retained
-via Biopython~\cite{cock2009}.
+Three receptor structures were retrieved in mmCIF format from the RCSB PDB
+AWS Open Data mirror (snapshot~2026-01-01): PDB~9L40 (ATR, bound to
+berzosertib, 2.87~\AA{}), PDB~9L4B (ATR, bound to camonsertib, 3.20~\AA{}),
+and PDB~2YM8 (human CHK1, 2.07~\AA{})~\cite{wang2025}. We include 2YM8 as a
+non-cryo-EM (X-ray crystallographic) kinase reference structure to test
+whether our findings are reproducible on non-cryo-EM-derived receptors;
+with only one such structure to compare against, this can only be treated
+as a hypothesis ($n=1$), which we report as such (Limitations). PDB~5YZ0
+(4.7~\AA{}) was omitted due to its poor resolution and consequent inability
+to reliably resolve side chains within the ATP pocket~\cite{wang2025}. Both
+protein chains (full homodimer) were retained using Biopython~\cite{cock2009}.
 
 For 9L40, contact analysis (heavy atoms within 4.5~\AA{} of each protein
-chain) confirmed residues A2701/B2701 as the ATP-competitive active site and
-A2702/B2702 as the dimer-interface allosteric site~\cite{wang2025}; the
-60.65~\AA{} centroid-to-centroid distance between the two is nearly three
-times the 22~\AA{} docking box used here, ruling out the allosteric site as
-a confound for the ATP-pocket redocking result.
+chain) identified residues A2701/B2701 as the ATP-competitive active site
+and A2702/B2702 as the dimer-interface allosteric site~\cite{wang2025}. The
+centroid-to-centroid distance between these sites is 60.65~\AA{}, almost
+three times the 22~\AA{} docking box used here, so the ATP-pocket redocking
+result reported below cannot have been affected by the allosteric site.
 
 \textbf{Receptor preparation} was performed with Open Babel~3.1.1~\cite{oboyle2011}
 and Meeko (2025). For each structure:
 \begin{itemize}\sloppy
 \item Hydrogens were added at pH~7.4 (Open Babel \texttt{--pH 7.4});
-\item Alternate locations were resolved by retaining the highest-occupancy
-  conformer; no alternate conformers were present among residues within
-  5~\AA{} of the cognate ligand in any of the three primary structures;
+\item Alternate locations were resolved by keeping the highest-occupancy
+  conformer; none of the alternate conformations are located near the
+  cognate ligand in any of the three primary structures (within 5~\AA{});
 \item Crystallographic waters and non-ligand heteroatoms were removed;
 \item Asp/Glu negative; Lys/Arg positive; histidine tautomer states were
-  assigned by Meeko during flexible-receptor preparation, requiring an
-  explicit HIE assignment for HIS2477 (Section~2.8);
-\item Meeko preparation automatically deleted \textasciitilde400~residues whose
-  side-chain density could not be template-matched at approximately
-  3~\AA{} resolution; automatically dropping surface/loop side chains that
-  cannot be reliably placed in an incomplete cryo-EM map is standard
-  practice for receptor preparation at this resolution regime, not a
-  study-specific deviation, and all deleted residues were $>$10~\AA{} from
-  the docking box (Supplementary Table~S2);
+  determined by Meeko during the flexible-receptor preparation step, which
+  requires an explicit HIE assignment for HIS2477 (Section~2.8);
+\item Meeko's receptor-preparation step deleted \textasciitilde400~residues
+  whose side-chain density could not be matched against a template at
+  approximately 3~\AA{} resolution; automatically dropping surface/loop
+  side chains that cannot be reliably placed in an incomplete cryo-EM map
+  is a standard feature of receptor preparation at this resolution regime,
+  not a study-specific deviation, and all deleted residues were $>$10~\AA{}
+  from the docking box (Supplementary Table~S2);
 \item Proteins were converted to PDBQT with Open Babel using Gasteiger-Marsili
   partial charges~\cite{gas_marsili} (\texttt{--gen3d --partialcharge
   gasteiger}).
 \end{itemize}
 
-Physiological pH~7.4 and Gasteiger-Marsili charges were applied uniformly to
-every receptor and ligand in this study (redocking set, pilot library, CAK
-survey, and CASF-2016 subset alike) because they are parameter-free,
-per-atom defaults that require no target- or ligand-specific tuning, making
-them the appropriate choice for a protocol that is deliberately held
-constant across a structurally and chemically heterogeneous set of
-receptors and compounds rather than optimized for any one of them; a more
-sophisticated charge model or per-compound protonation-state prediction
-would reintroduce exactly the kind of ligand-specific tuning this study's
-design is meant to avoid.
+All receptors and ligands in this study (redocking set, pilot library, CAK
+survey, and CASF-2016 subset alike) were docked at physiological pH~7.4 and
+using Gasteiger-Marsili charges. These are parameter-free, per-atom default
+charge models that do not need any target- or ligand-specific tweaking --
+the appropriate choice for a protocol that is deliberately held constant
+across a structurally and chemically diverse set of receptors and compounds
+rather than tailored specifically for any of them. A more subtle charge
+model or per-compound prediction of protonation state would reintroduce
+precisely the type of ligand-specific tweaking that this study's design
+aims to avoid.
 
-The 22~\AA{} cubic search box was retained as the single, fixed protocol
-parameter across all receptors and all 45 library/survey ligands (5 seeds,
-35 derivatives, and the CASF/CAK cognate ligands), rather than sized
-per-ligand, because every ligand docked in this study is a single-site,
-ATP-competitive kinase inhibitor under approximately 550~Da: centered on the
-cognate ligand centroid, a 22~\AA{} cube comfortably contains such a ligand
-together with its first-shell pocket residues in every structure tested, so
-a static box size does not by itself bias the comparison across receptors.
-This approach follows the recommendation of Feinstein and
-colleagues~\cite{feinstein2021} that search box dimensions should be
-justified relative to the specific ligand and receptor rather than chosen
-by default; a systematic per-ligand box-size sensitivity sweep across the
-full benchmark was not performed and is noted as a limitation
+Because all ligands docked in this study are single-site, ATP-competitive
+kinase inhibitors of approximately 550~Da or less, the 22~\AA{} cubic
+search box, centered on the cognate ligand centroid, was retained as the
+sole, unchanged protocol parameter for all receptors and all 45
+library/survey ligands (5 seeds, 35 derivatives, and the CASF/CAK cognate
+ligands) instead of being sized per ligand: it is large enough to contain
+both the ligand itself and its first-shell pocket residues in every
+structure tested, which renders a static box size neutral with respect to
+the comparison between receptors. This follows the advice of Feinstein and
+colleagues~\cite{feinstein2021} that search-box size be rationalized
+according to the specific ligand and receptor rather than chosen by
+default; no systematic per-ligand box-size sensitivity sweep across the
+full benchmark was undertaken, which is noted as a limitation
 (Section~3.7).
 
-wwPDB validation reports gave per-ligand metrics for the active-site ligand
-copy used as the redocking reference in each structure: 9L40/A2701,
+wwPDB validation reports give per-ligand information for the active-site
+ligand copy used as the redocking reference in each structure: 9L40/A2701,
 Q-score~0.553, residue inclusion~0.818; 9L4B/A2701, Q-score~0.528, residue
-inclusion~0.967~\cite{pintilie2020}. These values indicate both deposited
-ligand models have comparable local map support, although a comparable
-Q-score does not by itself establish the correctness of the modeled
-pose~\cite{pintilie2020}.
+inclusion~0.967~\cite{pintilie2020}. These values indicate that both
+deposited ligand models show similar local map support, although a similar
+Q-score does not guarantee that the pose itself is
+correct~\cite{pintilie2020}.
 
 \subsection{Seed library and derivatives}
 
-Five compounds formed the seed library: the three deposited active-site
-ligands (berzosertib, camonsertib, CHK1 inhibitor from 2YM8), plus prexasertib
-and ceralasertib (SMILES verified against reported molecular formula and exact
-mass). The seed set was fragmented with the BRICS algorithm~\cite{degen2008}
-into 22 unique fragments, recombined via RDKit~\cite{rdkit}, capped at 5,000
-candidates. Pre-filtering by relaxed Lipinski~\cite{lipinski1997} and
-Veber~\cite{veber2002} rules, plus PAINS~\cite{baell2010}/Brenk structural
-alert removal~\cite{brenk2008}, left 786 candidates. Retained compounds were
-scored against four drug-likeness rules (Lipinski, Veber, Ghose~\cite{ghose1999},
-Egan~\cite{egan2000}); 680 of 786 (86.5\%) satisfied $\ge$3/4 rules. The 35
-derivatives selected for pilot docking were the highest-ranked by number of
-rules satisfied, with ties broken by ascending molecular weight. The complete
-ranking and selection scores are in Supplementary Table~S4. This selection
-protocol is necessarily biased toward smaller, rule-compliant molecules, a
-limitation that should be considered when interpreting the pilot docking
+Five compounds comprised the seed library: the three deposited active-site
+ligands (berzosertib, camonsertib, and the CHK1 inhibitor from 2YM8), plus
+prexasertib and ceralasertib (SMILES checked against reported molecular
+formula and exact mass). These were split into 22 unique fragments using
+the BRICS algorithm~\cite{degen2008}, recombined using RDKit~\cite{rdkit},
+and capped at 5,000 candidates. Candidates were pre-filtered by relaxed
+Lipinski~\cite{lipinski1997} and Veber~\cite{veber2002} rules, plus
+PAINS~\cite{baell2010}/Brenk structural-alert removal~\cite{brenk2008},
+leaving 786 candidates. Retained compounds were assessed against four
+drug-likeness rules (Lipinski, Veber, Ghose~\cite{ghose1999},
+Egan~\cite{egan2000}), of which 680 of 786 (86.5\%) satisfied $\ge$3/4
+rules. Derivatives selected for pilot docking ($n=35$) were those
+satisfying the most rules, ranked by ascending molecular weight. The
+complete ranking and selection scores are in Supplementary Table~S4. This
+selection protocol is necessarily biased toward smaller, rule-compliant
+molecules, which should be kept in mind when interpreting the pilot docking
 ranking.
 
 \subsection{Redocking validation protocol}
 
-Each receptor was validated by extracting its deposited ligand, redocking into
-the identical receptor/box with AutoDock Vina~1.2.7
-(Python bindings)~\cite{trott2010} at exhaustiveness~32, three independent
-seeded replicates (seeds~1000,~1001,~1002), and computing RMSD (heavy atoms)
-against the deposited native pose, with a pre-specified pass threshold of
-$\le$2.0~\AA{}~\cite{hartshorn2007}. The threshold was chosen to match the
-Astex Diverse Set convention~\cite{hartshorn2007} and was fixed before any
-receptor was tested, to avoid post-hoc threshold selection.
+Each receptor was validated by extracting its deposited ligand, redocking
+into the same receptor/box using AutoDock Vina~1.2.7 (Python
+bindings)~\cite{trott2010} exhaustively (exhaustiveness~32), seeded with
+three independent replicates (seeds~1000, 1001, 1002), and calculating the
+RMSD (heavy atoms) between the redocked pose and the deposited native pose,
+using a pre-specified pass threshold of $\le$2.0~\AA{}~\cite{hartshorn2007}.
+The threshold was set to conform to the Astex Diverse Set
+convention~\cite{hartshorn2007} and was pre-specified prior to testing any
+receptor, to prevent post-hoc threshold selection.
 
-Two RMSD variants are reported: naive index-matched RMSD and
+Two RMSD measures are reported: naive index-matched RMSD and
 symmetry-corrected RMSD (spyrmsd~v0.6.2, graph-isomorphism atom
-matching~\cite{meli2020}). The symmetry-corrected RMSD $\mathrm{RMSD_s}$
-between a docked pose $P_d$ and the reference pose $P_r$ is defined as:
+matching~\cite{meli2020}). The symmetry-corrected RMSD is defined as the
+root-mean-square deviation between a docked pose $P_d$ and a reference pose
+$P_r$:
 \[
 \mathrm{RMSD_s}(P_d, P_r) = \min_{\sigma \in S} \sqrt{\frac{1}{N}
 \sum_{i=1}^{N} \| \mathbf{x}_{d,i} - \mathbf{x}_{r,\sigma(i)} \|^2 }
 \]
 where $\sigma$ is a permutation of equivalent atoms in the set $S$ of
-topological symmetries and $N$ is the number of heavy atoms. This correction
-is important for ligands such as berzosertib that contain internal topological
-symmetries (equivalent ring atoms, sulfone oxygens), for which index-matched
-RMSD can overstate the true pose error~\cite{meli2020}.
+topological symmetries and $N$ is the number of heavy atoms. This
+correction is useful for compounds like berzosertib that contain internal
+topological symmetries (equivalent ring atoms, sulfone oxygens), for which
+the naive index-matched RMSD may overstate the true error of the
+pose~\cite{meli2020}.
 
-Search reproducibility $\rho_{\text{repro}}$ was defined as the mean pairwise
-RMSD between each replicate's best-scoring pose across the three seeded runs:
+Search reproducibility $\rho_{\text{repro}}$ is the average pairwise RMSD
+between the best-scoring poses of each replicate across the three seeded
+runs:
 \[
 \rho_{\text{repro}} = \frac{1}{3} \sum_{i < j} \mathrm{RMSD}(P_{\text{best},i},
 P_{\text{best},j})
 \]
-This metric characterizes the stochastic variability of the Vina search
-rather than its accuracy against the native pose, an important distinction
-this study keeps separate throughout (Results).
+This metric assesses the random variation in the Vina search rather than
+its accuracy against the native pose, a distinction kept separate
+throughout this study (Results).
 
-Both sanity controls passed: crystal-vs-itself returned exactly 0.000~\AA{},
-and an exact 1.0~\AA{} rigid translation was recovered as exactly
-1.000~\AA{}. A receptor failing the redocking control in any replicate was
-excluded from candidate scoring.
+Both sanity controls yielded the expected result, with crystal-vs-itself
+giving exactly 0.000~\AA{} and the exact 1.0~\AA{} rigid translation
+recovered as exactly 1.000~\AA{}. If a receptor failed the redocking
+control in any replicate, it was excluded from candidate scoring.
 
 \subsection{Ligand preparation}
 
@@ -268,38 +271,36 @@ For cognate redocking, the deposited ligand chemical state (connectivity,
 stereochemistry, protonation, tautomer) was preserved unchanged, since the
 purpose of that test is to ask whether the docking protocol can recover a
 known experimental pose, not to explore alternative protonation states. For
-the pilot screen, seed and derivative ligands were 3D-embedded and
-protonated at pH~7.4 with Open Babel, then assigned Gasteiger-Marsili
-partial charges before conversion to PDBQT -- the same parameter-free
-protocol used for every receptor and ligand in this study (Section~2.1),
-rather than a more exhaustive per-compound tautomer/protomer search, which
-was not run and is not claimed here.
+the pilot screen, all seed and derivative ligands were prepared by 3D
+embedding, protonating at pH~7.4 with Open Babel, assigning Gasteiger-Marsili
+partial charges, and converting to PDBQT -- the same parameter-free
+treatment used for every receptor and ligand in this study (Section~2.1). A
+more detailed per-compound search of tautomers/protomers was not attempted
+and is not claimed here.
 
 \subsection{Pilot library docking}
 
 The 5 seeds plus the 35 selected derivatives were docked against each
-passing receptor using the identical protocol except exhaustiveness~16 (three
-seeds: 2000,~2001,~2002). Because the protocol consistency argument requires
-validation at screening-level exhaustiveness, redocking was re-run at
-exhaustiveness~16: the same pass/fail pattern held (9L40
-3.01$\pm$0.06~\AA{} fail, 9L4B~0.59$\pm$0.02~\AA{} pass,
-2YM8~0.92$\pm$0.01~\AA{} pass), confirming that the reliability conclusion
-is robust to this parameter choice.
+passing receptor using the identical protocol except at exhaustiveness~16
+(three seeds: 2000, 2001, 2002). For consistency of the protocol argument,
+we validated redocking at this screening-level exhaustiveness as well: the
+same pass/fail pattern held (9L40 3.01$\pm$0.06~\AA{} fail, 9L4B
+0.59$\pm$0.02~\AA{} pass, 2YM8 0.92$\pm$0.01~\AA{} pass), indicating that
+the reliability conclusion is robust to this choice of parameter.
 
 \subsection{Multi-structure survey}
 
-The identical validation protocol was applied to 14 additional cryo-EM
-structures of the CDK7/cyclin~H/MAT1 CAK complex~\cite{cushing2024}, each
-bound to a distinct ATP-competitive inhibitor. These 14 structures derive
-from a single target system and a single research group and therefore
-represent a clustered, single-target series rather than independent targets.
-Because the CAK structures are closely related and derive from a single
-target system, the 13/14 result is treated as descriptive evidence of failure
-within this series rather than as a population estimate. The pipeline was
-verified on 9L4B: it reproduced the original result almost exactly
-(RMSD~0.60$\pm$0.03 vs.~0.61$\pm$0.02~\AA{}; Q-score~0.528 identical),
-confirming that the automated survey pipeline is consistent with the
-hand-curated protocol.
+The identical validation protocol was also applied to 14 additional
+cryo-EM structures of the CDK7/cyclin~H/MAT1 CAK complex~\cite{cushing2024},
+each bound to a different ATP-competitive inhibitor. All 14 structures come
+from one target system and one research group, making this a clustered
+single-target set rather than 14 independent targets. Given this close
+relationship, the 13/14 result for this set should be viewed as descriptive
+evidence of failure within this series, not a population estimate. The
+pipeline was verified on 9L4B: it reproduced the original result almost
+exactly (RMSD~0.60$\pm$0.03 vs.\ 0.61$\pm$0.02~\AA{}; Q-score~0.528,
+identical), confirming that the automated survey pipeline is consistent
+with the hand-curated protocol.
 
 \subsection{Positive-control sanity check}
 
@@ -309,77 +310,74 @@ first 20 PDB IDs, in file order, of a complete CASF-2016 core-set listing
 redistributed, not curated or re-ordered by us, in the \texttt{DeepDock}
 GitHub repository.\footnote{\url{https://github.com/OptiMaL-PSE-Lab/DeepDock},
 file \texttt{Validation\_Docking/DockingResults\_CASF2016\_CoreSet.csv}.}
-This sequential selection rule, rather than a stratified or pseudorandom
-draw, was chosen specifically to avoid any appearance of hand-picking
-targets favorable to the pipeline. The 285-complex CASF-2016 core
-set~\cite{su2019} is a widely used benchmark for docking protocol
-validation, and the 58\% Vina self-docking success rate reported for it on
-this same benchmark~\cite{zhang2023} is a useful contextual reference.
-However, this reference value was obtained under specific preparation and
-sampling conditions different from ours, and therefore should not be
-interpreted as a universal ``Vina success rate.'' This control is framed
-strictly as a
-pipeline sanity check -- confirming the pipeline is not badly broken -- and
-not as a comprehensive docking-accuracy benchmark: 20 complexes from one
-core set, under one fixed generic protocol, cannot substitute for a
-systematic accuracy evaluation, and failure to reject a null hypothesis of
-equivalence to the 58\% literature figure does not itself establish that
-equivalence. Exact binomial 95\% confidence intervals are reported using the
-Clopper-Pearson method~\cite{clopper1934}.
+This sequential rule, rather than a stratified or pseudorandom draw, was
+chosen specifically to avoid any appearance of hand-picking targets
+favorable to the pipeline. The 285-complex CASF-2016 core
+set~\cite{su2019} is a popular test case for docking protocol validation,
+and the reported 58\% Vina self-docking success rate on this
+benchmark~\cite{zhang2023} is a helpful contextual comparison. That value
+was obtained under particular preparation and sampling conditions distinct
+from ours, so we do not take it as representative of any ``Vina success
+rate.'' This test is meant purely as a check on our pipeline, not as a
+broad benchmark of docking accuracy: 20 complexes, under one fixed generic
+protocol, cannot replace a systematic evaluation of accuracy, and failing
+to reject a null hypothesis of equality to the 58\% literature value does
+not itself indicate equality. We report exact binomial 95\% confidence
+intervals using the Clopper-Pearson method~\cite{clopper1934}.
 
 \subsection{Flexible-sidechain redocking}
 
-As a test for rigid-conformer contributions to the 9L40 failure, five
-active-site residues within 4.5~\AA{} of native berzosertib (chain~A:
-LYS2327, TYR2365, GLU2378, TRP2379, HIS2477) were selected \emph{a priori}
-from the native complex (not after inspecting redocked poses) and allowed to
-move with Vina's flexible-sidechain feature. The 4.5~\AA{} cutoff is the
+As a test for any potential role of rigid conformations in the failure of
+9L40, five active-site residues within 4.5~\AA{} of native berzosertib
+(chain~A: LYS2327, TYR2365, GLU2378, TRP2379, HIS2477) were selected
+\emph{a priori} (not based on inspection of the redocked poses) and defined
+as flexible side chains for Vina. The 4.5~\AA{} distance cutoff matches the
 same heavy-atom contact-shell radius used earlier in this study to
-disambiguate the ATP-competitive site from the allosteric site
-(Section~2.1); the resulting five-residue set is therefore a direct,
-pre-specified consequence of applying that fixed radius to the native pose,
-not a count chosen for effect.
+differentiate the ATP-competitive site from the allosteric site
+(Section~2.1); the five identified residues are therefore a natural,
+predetermined consequence of applying this fixed radius to the native pose,
+not a deliberate choice for effect.
 
-Rigid and flexible receptor parts were prepared with Meeko
-(\texttt{mk\_prepare\_receptor.py}), which required an explicit histidine
-tautomer assignment for HIS2477 (HIE) and, as in Section~2.1, automatically
-removed template-unmatched surface residues; none of the five target
-flexible residues were among those removed. The docking box was enlarged
-from 22~\AA{} (rigid redocking, Section~2.1) to 30~\AA{} to give the
-flexible side chains room to explore alternate rotamers without a
-ligand-outside-box error. Because this changes three things relative to the
-original rigid redocking result at once -- side-chain flexibility, box
-size, and the Meeko-prepared receptor composition -- a matched control was
-run alongside the flexible run: fully rigid redocking (no residues declared
-flexible) with the identical enlarged 30~\AA{} box and the identical
-Meeko-prepared receptor and ligand, isolating the effect of flexibility
-alone from the other two changes. Both conditions used three seeded
-replicates (1000, 1001, 1002, exhaustiveness~32, matching the original
-rigid-redocking protocol). Individual replicate RMSDs are in Supplementary
-Table~S5.
+The flexible and rigid parts of the receptor were prepared with Meeko
+(\texttt{mk\_prepare\_receptor.py}), which requires an explicit tautomer
+assignment for every histidine, including HIS2477 (HIE). As in
+Section~2.1, template-mismatched surface residues were automatically
+deleted by Meeko; none of the five targeted flexible residues was among
+them. To give the flexible side chains room to explore alternative rotamers
+without triggering a ligand-outside-box error, the docking box size was
+increased from 22~\AA{} (rigid redocking, Section~2.1) to 30~\AA{}. Because
+this changes three things relative to the original rigid result at once --
+flexibility, box size, and the Meeko-prepared receptor -- a matched control
+was run alongside the flexible run: fully rigid redocking (no residues
+declared flexible) with the identical enlarged 30~\AA{} box and the
+identical Meeko-prepared receptor and ligand, isolating the effect of
+flexibility from the other two changes. Both conditions used three seeded
+replicates (1000, 1001, 1002, exhaustiveness~32), consistent with the
+original rigid-redocking protocol. Individual replicate RMSDs are provided
+in Supplementary Table~S5.
 
 \subsection{Rank concordance analysis}
 
-The 40-compound pilot set was docked against excluded 9L40 with the same
-three seeds used for 9L4B (2000,~2001,~2002) for a matched comparison. Rank
-concordance metrics included: Spearman rank correlation $\rho$ with
-bootstrap 95\% confidence interval (10,000 resamples), Kendall $\tau$,
-mean absolute rank displacement, and top-10 overlap fraction. The bootstrap
-procedure resampled compound pairs with replacement to estimate the
-uncertainty of $\rho$, accounting for the small set size~\cite{efron1993}.
+To provide a fair comparison, the 40-compound pilot set was docked against
+excluded 9L40 using the same three seeds as for 9L4B (2000, 2001, 2002).
+Rank concordance metrics included: Spearman rank correlation $\rho$ with
+bootstrap 95\% confidence interval (10,000 resamples), Kendall~$\tau$,
+mean absolute rank displacement, and top-10 overlap fraction. For $\rho$,
+the bootstrap approach estimates uncertainty by resampling compound pairs
+with replacement~\cite{efron1993}, accounting for the small set size.
 
 \subsection{Computational environment and reproducibility}
 
 All calculations: Vina~1.2.7 (Python bindings), Open Babel~3.1.1,
-RDKit~2026.03.6, Biopython~1.88, Meeko (2025), all CPU only on a
-standard workstation (no GPU acceleration). Exact command-line arguments,
-prepared PDBQT files, and individual replicate RMSDs are provided in the
-repository. The three seeded RMSD values for each structure are reported
-individually in Supplementary Table~S6; reported mean~$\pm$~SD describes
-variation among the three docking runs and does not represent inferential
-uncertainty about receptor suitability. All software versions, random seeds,
-thresholds, and selection criteria were recorded before the first pipeline
-execution and are available for independent verification.
+RDKit~2026.03.6, Biopython~1.88, Meeko (2025), all CPU only on a standard
+workstation (no GPU acceleration). Exact command-line arguments, prepared
+PDBQT files, and individual replicate RMSDs are provided in the repository.
+Supplementary Table~S6 provides the three seeded RMSD values for each
+structure individually. Reported mean~$\pm$~SD describes variation among
+the three docking runs but is not an inferential measure of uncertainty
+about the receptor's suitability. All software versions, random seeds,
+thresholds, and selection criteria were recorded prior to the first
+execution of the pipeline and are available for independent verification.
 
 % ======================================================================
 \section{Results and discussion}
@@ -387,14 +385,15 @@ execution and are available for independent verification.
 
 \subsection{Redocking validation}
 
-Table~1 summarizes the redocking validation results. 9L4B and 2YM8 passed
-with substantial margin (symmetry-corrected RMSD~0.61$\pm$0.02~\AA{} and
-0.76$\pm$0.01~\AA{}). 9L40---the higher-resolution structure---failed
-(RMSD~2.53$\pm$0.01~\AA{}). The allosteric-site confound was ruled out: the
-nearest allosteric-site ligand copy is 60.65~\AA{} from the active site,
-nearly three times the 22~\AA{} docking box, so the box could not have
-reached it. Per the pre-specified rule, 9L40 was excluded from candidate
-scoring. Figure~1 shows the native and docked poses for both structures.
+Redocking validation results are summarized in Table~1. 9L4B and 2YM8
+passed comfortably (symmetry-corrected RMSD~0.61$\pm$0.02~\AA{} and
+0.76$\pm$0.01~\AA{}). 9L40, the higher-resolution structure, failed
+(RMSD~2.53$\pm$0.01~\AA{}). The nearest allosteric-site ligand copy is
+60.65~\AA{} from the active site, nearly three times the 22~\AA{} docking
+box, which rules out the possibility that the docking box reached the
+allosteric site. Per the pre-specified rule, 9L40 was excluded from the
+candidate-scoring process. Figure~1 shows the native and docked poses for
+both structures.
 
 \begin{figure}[t]
 \centering
@@ -427,35 +426,35 @@ replicate best poses. $^b$ Non-cryo-EM (X-ray) reference structure.}
 
 \subsection{Multi-structure survey}
 
-Table~2 reports results for all 17 structures tested. Within this sample, 14 of 17 (82\%)
-failed the 2.0~\AA{} threshold; only 9L4B, 2YM8, and one CAK entry (8P75)
-passed. No statistically significant monotonic association between reported
-resolution and redocking outcome was detected (Spearman $\rho=-0.28$,
-$p=0.28$, $n=17$). No statistically significant association between the
-evaluated global measure of residue inclusion and redocking outcome was
-detected ($r=-0.14$, $p=0.61$, $n=16$). Among the 12 structures with a
-reported Q-score, the two passing structures had a lower mean Q-score (0.569)
-than the 10 failing structures (0.688); with only $n=2$ passing, Q-scored
-structures, this group comparison is a descriptive finding, not a definitive
-statistical correlation, and should not be read as evidence that Q-score
-lacks predictive value.
+Table~2 reports results for all 17 structures tested. Of these, 14 of 17
+(82\%) do not pass the 2.0~\AA{} threshold; only three pass it: 9L4B, 2YM8,
+and one CAK entry (8P75). There was no statistically significant monotonic
+association between reported resolution and redocking outcome (Spearman
+$\rho=-0.28$, $p=0.28$, $n=17$), nor between the evaluated global measure
+of residue inclusion and redocking outcome ($r=-0.14$, $p=0.61$, $n=16$).
+For the 12 structures with a reported Q-score, the two passing structures
+had a lower mean Q-score (0.569) than the 10 failing structures (0.688),
+which implies a descriptive trend but is not a definitive statistical
+correlation given the small number of Q-scored passing structures
+($n=2$); this result should not be taken as an indication that Q-score has
+no predictive value.
 
-Across the CAK failures, the docked ligand centroid remained close to its
-native centroid (1.1--4.1~\AA{}) despite RMSDs of 5--7~\AA{}, indicating
-reorientation within the pocket rather than gross displacement. This pattern
-is consistent with orientational degeneracy at the kinase hinge -- where an
-ATP-competitive scaffold can occupy more than one plausible binding
-orientation -- or with rigid-receptor limitations that prevent the docking
-engine from sampling the crystallographically observed binding mode, rather
-than with a setup error such as a misplaced box.
+The CAK failures showed RMSDs in the range 5--7~\AA{} but docked ligand
+centroids within 1.1--4.1~\AA{} of their native centroids, suggesting the
+docked ligand had been reoriented within the pocket rather than moved far
+away from it. This is consistent with orientational degeneracy at the
+kinase hinge -- where multiple positions may be reasonable for an
+ATP-competitive scaffold -- or with rigid-receptor limitations that prevent
+the docking engine from exploring the experimentally observed binding
+mode, rather than with a setup problem such as a misplaced box.
 
-The 14 CAK structures derive from a single target system and research group
-and therefore represent clustered observations, not 14 independent targets.
-Within this single-target series, 13 of 14 structures failed the
-prespecified criterion. Because of this clustering, the 13/14 observation
-should not be interpreted as an estimate of the underlying failure
-probability for kinase structures generally; rather, it represents
-descriptive evidence of failure within this particular CAK series.
+The 14 CAK structures come from a single target system and research group;
+they are thus clustered observations, not 14 independent targets. Within
+this single-target series, 13 of 14 structures failed the prespecified
+criterion. Because of this clustering, the 13/14 observation should not be
+interpreted as an estimate of the underlying failure probability for
+kinase structures generally, but rather as descriptive evidence of failure
+within this particular CAK series.
 
 \begin{table}[t]
 \centering
@@ -492,31 +491,32 @@ Structure & Res. (\AA{}) & RMSD (\AA{}) & Pass? & Q-score & Res.\ incl. \\
 \subsection{Positive-control sanity check}
 
 The unmodified pipeline passed 8 of 20 (40\%) CASF-2016 subset complexes
-selected by the first-20-in-file-order rule described in Methods, an
-objective and non-random selection fixed before inspection (Table~3). The
-exact 95\% binomial confidence interval (Clopper-Pearson) is 19.1--63.9\%.
-This subset is a pipeline sanity check, not a comprehensive
-docking-accuracy benchmark, and is read accordingly: because failure to
-reject a null hypothesis does not establish equivalence, it is treated as
-evidence the pipeline is not badly broken, not as evidence the pipeline is
-definitively valid. The observed 40\% rate was not statistically
-distinguishable from the literature Vina value of 58\% on the full 285-complex
-core set~\cite{zhang2023} (one-sided binomial $p=0.08$), though this
-comparison is limited by small sample size and by protocol differences in
-software version, receptor preparation, and sampling parameters. The 58\%
-reference value represents Vina performance in a specific randomized-ligand
-redocking experiment and should not be interpreted as a universal ``Vina
-success rate,'' as other CASF-2016 evaluations using different protocols have
-reported substantially higher top-pose success rates (Supplementary
-Section~S1).
+selected by the first-20-in-file-order rule described in Methods (Table~3).
+The exact 95\% binomial confidence interval (Clopper-Pearson) is
+19.1--63.9\%. We note that the purpose of this subset is as a pipeline
+sanity check, not an exhaustive evaluation of docking accuracy: failure to
+reject a null hypothesis does not suggest equivalence, only that we are
+unable to detect a significant difference. It indicates that our pipeline
+is not badly broken, but not that our pipeline is definitively valid.
+Although the observed 40\% is not significantly different from the
+literature Vina value of 58\% on the full 285-complex core
+set~\cite{zhang2023} (one-sided binomial $p=0.08$), the comparison has
+caveats, particularly the small sample size and differences in software
+version, receptor preparation, and sampling parameters between our
+protocol and the one the 58\% figure was measured under. The 58\% value
+reflects Vina performance in a specific randomized-ligand redocking
+experiment and should not be construed as a general ``Vina success rate,''
+as other CASF-2016 evaluations using different protocols report
+substantially higher top-pose success rates (Supplementary Section~S1).
 
 The CAK series (1/14 passed, 7.1\%; exact 95\%~CI 0.2--33.9\%) showed fewer
-successful redockings than the CASF sanity-check subset (8/20, 40\%). Fisher's
-exact test gave $p=0.037$ for the prespecified one-sided comparison (motivated
-by the hypothesis that CAK success would be lower than the CASF control) and
-$p=0.050$ for the corresponding two-sided comparison. The CASF sanity check did
-not reveal an obvious gross failure of the docking implementation, whereas 13 of
-14 structures in the sampled CAK series failed the prespecified criterion.
+successful redockings than the CASF sanity-check subset (8/20, 40\%;
+Table~3). Fisher's exact test gave $p=0.037$ for the prespecified one-sided
+comparison (hypothesis: CAK would succeed less often than the CASF
+control) and $p=0.050$ for the two-sided comparison. The CASF sanity check
+did not reveal an obvious gross failure of the docking implementation,
+whereas 13 of 14 structures in the sampled CAK series \emph{failed} the
+prespecified criterion.
 
 \begin{table}[t]
 \centering
@@ -536,56 +536,55 @@ ATR pair (9L40/9L4B)                   & 2  & 1 (50\%)   & 1.3--98.7\% \\
 
 \subsection{Matched flexible-sidechain analysis}
 
-Allowing the five active-site residues nearest the native berzosertib pose
-to move during docking did not recover it: mean symmetry-corrected RMSD
-across three seeds was 3.00$\pm$0.92~\AA{} (individual seeds: 4.29, 2.23,
-2.49~\AA{}), and no seed passed the 2.0~\AA{} threshold. Naively compared
-against the original fully rigid result (2.53~\AA{}, 22~\AA{} box, Open
-Babel-prepared ligand), this looks like flexibility made the pose
-marginally \emph{worse} -- but that comparison is confounded, since the
-flexible run also changes the box size (22~\AA{}$\to$30~\AA{}) and the
-receptor preparation (Meeko vs.\ Open Babel) at the same time as
-flexibility. The matched control isolates flexibility alone: fully rigid
-redocking with the identical enlarged 30~\AA{} box and the identical
-Meeko-prepared receptor and ligand, but no residues declared flexible,
-gives mean symmetry-corrected RMSD 4.50$\pm$0.05~\AA{} -- \emph{worse} than
-either the original rigid result or the flexible result. Against this
-correctly matched baseline, allowing the five residues to move improved
-the pose from 4.50~\AA{} to 3.00~\AA{}, a real effect in the expected
-direction; it was simply not enough to reach the 2.0~\AA{} threshold. The
-larger box size and/or the Meeko receptor-preparation differences, not the
-choice to keep side chains rigid, account for most of the difference
-between the original 2.53~\AA{} result and either Meeko-based result. The
-corrected conclusion is narrower than either the original claim or its
-opposite: flexibility helps, modestly, exactly as expected if part of the
-failure is a rigid-conformer effect -- but it is not enough on its own to
-rescue the pose, so a less-supported deposited pose or a conformational
-change beyond these five side chains remains at least as plausible an
-explanation (Discussion).
+Allowing flexibility in the five active-site residues nearest the native
+berzosertib pose did not recover it: mean symmetry-corrected RMSD across
+three seeds was 3.00$\pm$0.92~\AA{} (individual seeds: 4.29, 2.23,
+2.49~\AA{}), and no seed met the 2.0~\AA{} threshold. Naively compared to
+the original fully rigid result (2.53~\AA{}, 22~\AA{} box, Open
+Babel-prepared ligand), it appears that allowing flexibility slightly
+worsens the pose -- but this comparison is confounded, since the flexible
+run also changes the box size (22~\AA{}$\to$30~\AA{}) and the receptor
+preparation (Meeko vs.\ Open Babel) at the same time as flexibility. The
+matched control isolates flexibility alone: fully rigid redocking with the
+identical enlarged 30~\AA{} box and the identical Meeko-prepared receptor
+and ligand, but no residues declared flexible, gives mean
+symmetry-corrected RMSD~4.50$\pm$0.05~\AA{} -- worse than both the
+original rigid result and the flexible result. Against this correctly
+matched baseline, the improvement from 4.50~\AA{} to 3.00~\AA{} when the
+five residues are allowed to move is real and in the expected direction,
+though still insufficient to reach the 2.0~\AA{} threshold. The larger box
+size and the Meeko receptor preparation, not the choice to keep side
+chains rigid, account for most of the difference between the original
+2.53~\AA{} result and either Meeko-based result. The corrected conclusion
+is therefore narrower than either the original claim or its opposite:
+flexibility genuinely helps, but not enough on its own to rescue the pose,
+so a less-supported deposited pose or a conformational change beyond
+these five side chains remains at least as plausible an explanation
+(Discussion).
 
 \subsection{Error-propagation comparison}
 
 Docking the 40-compound pilot set against the excluded 9L40 instead of
-validated 9L4B produced low rank concordance: Spearman $\rho=0.21$ (bootstrap
-95\%~CI $-0.19$ to $0.52$, crossing zero), Kendall~$\tau=0.09$, mean absolute
-rank displacement~11.7 positions (max~29), and only 5 of 10 compounds shared
-between the two top-10 lists (Table~4). The five shared top-10 compounds
-were: camonsertib, ceralasertib, deriv\_002, deriv\_003, and deriv\_019 --
-the same five compounds that occupied the top five ranks in the 9L4B
-ranking. The top of the ranking is therefore stable across receptors: a
-campaign selecting only its top five candidates for synthesis would reach
-the same set either way. The churn is concentrated in the mid-ranks (roughly
-6--40), where score gaps are well below Vina's commonly cited absolute error
-against experiment (2--3~kcal/mol); a bootstrap $\rho$ CI that crosses zero
-describes substantial mid-rank reshuffling, not a scrambled ranking overall.
-The defensible reading is that receptor choice materially reorders the
-mid-ranks of this pilot screen while leaving its very top unchanged, and
-that the practical consequence depends on how deep into the ranked list a
-campaign selects candidates: a top-5 or top-10 selection is comparatively
-robust here, while a top-20 or top-30 selection would draw on a materially
-different compound set. This is a demonstration of consequence within this
-pilot set, not a general enrichment claim, which would require evaluation
-against known actives and decoys~\cite{huang2006}.
+validated 9L4B produced low rank concordance: Spearman $\rho=0.21$
+(bootstrap 95\%~CI $-0.19$ to $0.52$, crossing zero), Kendall~$\tau=0.09$,
+mean absolute rank displacement~11.7 positions (max~29), and only 5 of 10
+compounds shared between the two top-10 lists (Table~4). The five shared
+top-10 compounds were: camonsertib, ceralasertib, deriv\_002, deriv\_003,
+and deriv\_019 -- the same five compounds that occupied the top five ranks
+in the 9L4B ranking. The top of the ranking is therefore stable across
+receptors: a campaign selecting only its top five candidates for synthesis
+would reach the same set either way. The churn is concentrated in the
+mid-ranks (roughly 6--40), where score gaps are well below Vina's commonly
+cited absolute error against experiment (2--3~kcal/mol); a bootstrap
+$\rho$ CI that crosses zero describes substantial mid-rank reshuffling,
+not a scrambled ranking overall. A reasonable interpretation is that
+receptor choice alters the rankings of the middle portion of this pilot
+screen but does not affect the highest ranks: a selection from the top
+five (or top ten) is relatively insensitive to receptor choice, while a
+selection from the top twenty (or top thirty) would draw on a materially
+different set of compounds. Again, this is a demonstration of consequence
+within this pilot set, not a general enrichment claim, which would require
+evaluation against known actives and decoys~\cite{huang2006}.
 
 \begin{table}[t]
 \centering
@@ -606,29 +605,30 @@ deriv\_033 & 34 & 9  & 25 \\
 
 \subsection{Implications for practice}
 
-Cognate redocking provides a structure-specific quality-control test that can
-identify docking failures not apparent from nominal resolution or the
-evaluated global map/model metrics. 9L40 and 9L4B were solved in the same
-study, yet only the lower-resolution one passed---an inversion that no proxy
-metric captured. The observation was reproduced in a separate CAK structure
-series, although the CAK structures derive from a single target system and
-therefore do not establish target-independent generality. The 13/14 observed
-failures in the sampled CAK series should be treated as descriptive evidence
-within that series rather than as a kinase-wide failure frequency.
+Cognate redocking is a structure-specific quality-control test that can
+catch docking errors not apparent from nominal resolution or the evaluated
+global map/model metrics. 9L40 and 9L4B were solved in the same study, yet
+only the lower-resolution one passed -- a flip that no proxy metric
+detected. This observation was reproduced in a separate CAK structure
+series, though the CAK structures come from a single target system and so
+do not establish generality independent of target. The 13/14 observed
+failures in the sampled CAK series should be regarded as descriptive
+evidence within that series, not as a kinase-wide failure frequency.
 
-No statistically significant association between the available global
-map/model metrics and redocking outcome was detected in this small survey.
-Because only two structures with available Q-score measurements passed, the
-Q-score group comparison is a descriptive finding, not a definitive
-statistical correlation, and should not be generalized beyond this sample.
-Skipping the redocking-validation step this paper argues for is not a
-neutral shortcut either: the error-propagation comparison above shows that
-scoring candidates against an unvalidated receptor materially reorders a
-screen's mid-ranks even where its very top is preserved, so the practical
-cost of skipping validation depends on how deep into a ranked list a
-downstream campaign selects candidates. These results support the use of
-per-structure cognate redocking as a quality-control step, while systematic
-multi-target evaluation is required to determine its general utility.
+The small size of this survey means that any association seen between the
+available global map/model metrics and redocking outcome should not be
+over-interpreted. Only two structures with available Q-score measurements
+passed, so the comparison of the Q-score group is descriptive rather than
+definitive and should not be generalized beyond this sample. The shortcut
+to skip the redocking-validation step this paper argues against is not a
+neutral one either: the error-propagation comparison above shows that
+scoring candidates against an unvalidated receptor does reorder a screen's
+mid-ranks even where it preserves its very top, so the real-world cost of
+skipping validation depends on how far down a ranked list a downstream
+campaign picks candidates. While these results provide evidence for using
+per-structure cognate redocking as a quality-control step, the systematic
+multi-target evaluation needed to decide on its general utility has yet to
+be done.
 
 \subsection{Limitations}
 
@@ -648,26 +648,24 @@ study establishes functional modulation---only predicted binding and ranking.
 % ======================================================================
 \section{Conclusions}
 
-Cognate redocking provides a structure-specific quality-control test that can
-identify failures not apparent from nominal resolution or the evaluated
-global map/model metrics. Applied to two ATR structures from the same study,
-the test passed the lower-resolution one and failed the higher-resolution
-one, an inversion not explained by allosteric-site proximity. Within a
-single-target CAK structure series, 13 of 14 entries failed the same
-criterion. Cognate redocking is a useful structure-specific QC test that can
-expose docking failures not obvious from nominal resolution or the
-evaluated global map/model metrics, but its necessity and sufficiency for
-prospective enrichment require systematic evaluation across a broader,
-multi-target benchmark. Skipping this validation step is not a neutral
-shortcut: this pilot's own error-propagation comparison shows that scoring
-candidates against an unvalidated receptor materially reorders a screen's
-mid-ranks, a cost that grows with how deep into the ranking a downstream
-campaign selects candidates, even in this pilot where the very top of the
-ranking happened to be preserved. A systematic survey across many
-independent targets is the natural next step to determine whether the
-proportion of failures observed here is representative of recently
-deposited kinase structures generally. All code, data, and structures are
-openly available for independent verification.
+Cognate redocking is a structure-specific quality-control test that can
+reveal failures not obvious from nominal resolution or the evaluated
+global map/model metrics. Applying this test to two ATR structures from
+the same study showed success on the lower-resolution structure and
+failure on the higher-resolution one, an inversion not explained by
+allosteric-site proximity. A single-target CAK structure set showed the
+cognate-redocking criterion failing in 13 of 14 instances. Its value and
+utility for prospective enrichment nonetheless need further assessment
+across a wider, multi-target benchmark. Omitting this step is not
+innocuous, as shown by this pilot's own error-propagation comparison,
+which indicates that scoring candidates against an unvalidated receptor
+reorders a screen's mid-ranks, with the degree of impact depending on how
+far down a subsequent campaign's candidate selection goes -- even in this
+pilot, where the very top ranks happened to be preserved. The next
+logical step is to test whether this proportion of failures holds for
+recently published kinase structures more broadly, through a systematic
+study of many independent targets. The code, data, and structures behind
+this work are all available online for independent verification.
 
 % ======================================================================
 \section*{Acknowledgements}
@@ -688,8 +686,8 @@ All code, seed and derivative compound tables, redocking validation results,
 individual replicate RMSDs, prepared PDBQT files, and full residue-deletion
 lists are available at \url{https://github.com/ethanyyy123/research-molecule-editing}
 and in the underlying analysis pipeline repository at
-\url{https://github.com/The-MathKing/CogRed}, which additionally documents
-every review round and correction described in this manuscript. Receptor
+\url{https://github.com/The-MathKing/CogRed}, which also tracks every
+review round and correction described in this manuscript. Receptor
 structures are publicly available from RCSB PDB (9L40, 9L4B, 2YM8, and the
 CDK7/cyclin~H/MAT1 and CASF-2016 structures cited in Tables~2--3) and were
 retrieved via the AWS Open Data mirror (\url{s3://pdbsnapshots}).
